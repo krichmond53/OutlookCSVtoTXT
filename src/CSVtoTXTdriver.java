@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
@@ -13,40 +15,69 @@ import java.util.Scanner;
  */
 public class CSVtoTXTdriver {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		// Get Outlook .csv file
-		String inString = commandLine(args);		// Method for checking command line
-		File goodFile = isValidFile(inString);		// Method for validating a file
+		String inString = commandLine(args);			// Method for checking command line
+		File goodFile = isValidFile(inString);			// Method for validating a file
 		
+	    Scanner readIt = new Scanner(goodFile);			// Create a scanner to read the file
+	    ArrayList<Email> emails = makeEmails(readIt);		// Method to make ArrayList of emails from the scanner
+    
+	    
 		// Parse .csv file for relevant data
-//		Subject	
-//		Body	
+
+
+	}
+	
+	public static ArrayList<Email> makeEmails(Scanner input){
+		ArrayList<Email> em = new ArrayList<Email>();
+		while (input.hasNextLine()){
+			String thisLine = input.nextLine();
+//			System.out.println("This line: " + thisLine);
+			String[] lineSplit = thisLine.split("\",\"");
+			int count = 1;
+			for (String ls : lineSplit)
+			{
+				System.out.println(count + ") " + ls);
+				count++;
+			}
+			
+			
+//			Scanner getNums = new Scanner(thisLine);
+//			int jobNumber = 0;
+//			int executeTime = 0;
+//			int entryTime = 0;
+//			int jobPriority = 0;
+//			boolean badInfo = false;
+//			
+//			if (getNums.hasNextInt()) jobNumber = getNums.nextInt();		// Next integer will be job number
+//			else badInfo = true;
+//			if (jobNumber < 1) badInfo = true;
+//			if (!j.isEmpty() && (jobNumber <= j.get(j.size()-1).getNumber())) badInfo = true;
+//			
+//			if (getNums.hasNextInt()) executeTime = getNums.nextInt();		// Next integer will be execute time
+//			else badInfo = true;
+//			if (executeTime < 1) badInfo = true;
+//
+//			if (getNums.hasNextInt()) entryTime = getNums.nextInt();		// Next integer will be entry time
+//			else badInfo = true;
+//			if (entryTime < 1) badInfo = true;
+////			if (!j.isEmpty()) System.out.println(j.get(j.size()-1).getEntry());
+//			if (!j.isEmpty() && entryTime <= j.get(j.size()-1).getEntry()) badInfo = true;
+//				
+//			if (getNums.hasNextInt()) jobPriority = getNums.nextInt();		// Next number will be job priority
+//			else badInfo = true;
+//			if (jobPriority < 1 || jobPriority > 4) badInfo = true;
+//			
+//			if (getNums.hasNext())	badInfo = true;							// If there's more info, it is invalid
 //		
-//		// In Body, search for a string that looks like a date. 
-//		// Format: Sent: Tuesday, March 19, 2019 2:39:38 PM
-//
-//
-//		From: (Name)	
-//		From: (Address)	
-//		From: (Type)	
-//		To: (Name)	
-//		To: (Address)	
-//		To: (Type)	
-//		CC: (Name)	
-//		CC: (Address)	
-//		CC: (Type)	
-//		BCC: (Name)	
-//		BCC: (Address)	
-//		BCC: (Type)	
-//		Billing Information	
-//		Categories	
-//		Importance	
-//		Mileage	
-//		Sensitivity
-
-		
-
-
+//			if (!badInfo) {													// When there's no bad information....
+//				Job work = new Job(jobNumber, executeTime, entryTime, jobPriority);			// ...create a new job
+//				j.add(work);
+//			} else System.out.println("ERROR: Invalid infomation on line >>> " + thisLine + " <<<");
+//		getNums.close();
+		}
+		return em;
 	}
 	
 	public static String commandLine(String[] args){
