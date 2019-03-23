@@ -20,7 +20,7 @@ public class CSVtoTXTdriver {
 		// In Body, search for a string that looks like a date. 
 		// Format: Sent: Tuesday, March 19, 2019 2:39:38 PM
 
-		//change1
+
 		From: (Name)	
 		From: (Address)	
 		From: (Type)	
