@@ -22,6 +22,12 @@ public class Email {
 		this.ccAddress = ccAddress;
 	}
 
+	@Override
+	public String toString() {
+		return "Email [dateTime=" + dateTime + ", subject=" + subject + ", body=" + body + ", fromAddress="
+				+ fromAddress + ", toAddress=" + toAddress + ", ccAddress=" + ccAddress + "]";
+	}
+
 	public String getSubject() {
 		return subject;
 	}
