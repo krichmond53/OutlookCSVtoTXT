@@ -25,7 +25,14 @@ public class CSVtoTXT {
 		
 	    // Parse .csv file for relevant data
 	    ArrayList<Email> emails = makeEmails(readIt);		// Method to make ArrayList of emails from the scanner
-
+	    
+	    int num = 1;
+	    for(Email e:emails) {
+	    	if (!(e.getBody().trim().equals(""))) {
+		    	System.out.println("Email " + num + ")\n" + e.toString());
+		    	num++;
+	    	}
+	    }
 	}
 	
 	public static ArrayList<Email> makeEmails(Scanner input){
@@ -49,7 +56,8 @@ public class CSVtoTXT {
 			if (len == 7) {
 //				System.out.println("Body: " + body);
 				newEmail = new Email("defaultTime", subject, body, fromAddress, toAddress, ccAddress);
-				System.out.println(newEmail.toString());
+//				System.out.println(newEmail.toString());
+				em.add(newEmail);
 				
 				subject = lineSplit[1];
 				fromAddress = lineSplit[2];
@@ -67,7 +75,8 @@ public class CSVtoTXT {
 		}
 //		Email newEmail = Email(dateTime, subject, body, fromAddress, toAddress, ccAddress);
 		newEmail = new Email("defaultTime", subject, body, fromAddress, toAddress, ccAddress);
-		System.out.println(newEmail.toString());
+//		System.out.println(newEmail.toString());
+		em.add(newEmail);
 		
 		return em;
 	}
