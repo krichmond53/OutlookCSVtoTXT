@@ -35,6 +35,11 @@ public class CSVtoTXT {
 	    }
 	}
 	
+	/**
+	 * Creates ArrayList of Email objects
+	 * @param input - Scanner object of a good file
+	 * @return - List of Email objects
+	 */
 	public static ArrayList<Email> makeEmails(Scanner input){
 		ArrayList<Email> em = new ArrayList<Email>();
 		String subject = "";
@@ -51,12 +56,9 @@ public class CSVtoTXT {
 			
 			// If there are 7 items in the array and the next array doesn't have 7, then add the next array
 			// strings to the previous body.
-//			System.out.println("Array size: " + len);
 
 			if (len == 7) {
-//				System.out.println("Body: " + body);
 				newEmail = new Email("defaultTime", subject, body, fromAddress, toAddress, ccAddress);
-//				System.out.println(newEmail.toString());
 				em.add(newEmail);
 				
 				subject = lineSplit[1];
@@ -64,23 +66,25 @@ public class CSVtoTXT {
 				toAddress = lineSplit[3];
 				ccAddress = lineSplit[4];
 				body = lineSplit[6];
-//				System.out.println("Subject: " + subject + "\nFrom: " + fromAddress + "\nTo " 
-//						+ toAddress + "\nCC: " + ccAddress + "\n");
 			} else if (len < 7) {
 				for (String s : lineSplit) {
-					body += s + "\n";
+					if (s.trim().length() > 0) {
+						body += s + "\n";
+					}
 				}
 			}
-
 		}
-//		Email newEmail = Email(dateTime, subject, body, fromAddress, toAddress, ccAddress);
 		newEmail = new Email("defaultTime", subject, body, fromAddress, toAddress, ccAddress);
-//		System.out.println(newEmail.toString());
 		em.add(newEmail);
 		
 		return em;
 	}
 	
+	/**
+	 * Basic command line input 
+	 * @param args - First argument should be the name of a file in the current working directory
+	 * @return - name of file that user input
+	 */
 	public static String commandLine(String[] args){
 	    String s;
 	    Scanner keyIn;
@@ -94,7 +98,11 @@ public class CSVtoTXT {
 		return s;
 	}
 	
-	
+	/**
+	 * Check to see whether a file is valid or not
+	 * @param userFile - Name of the file to check for
+	 * @return - Valid file
+	 */
 	public static File isValidFile(String userFile)
 	{
 		File inFile = new File(userFile);

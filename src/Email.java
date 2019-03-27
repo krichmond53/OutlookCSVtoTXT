@@ -24,8 +24,8 @@ public class Email {
 
 	@Override
 	public String toString() {
-		return "Date: " + dateTime + "\nSubject: " + subject + "\nFrom: "
-				+ fromAddress + "\nTo: " + toAddress + "\nCC: " + ccAddress + "\nBody:\n " + body + "\n";
+		return "Date:\t" + dateTime + "\nSub:\t" + subject + "\nFrom:\t"
+				+ fromAddress + "\nTo:\t" + toAddress + "\nCC:\t" + ccAddress + "\nBody:\n" + body + "\n";
 	}
 
 	public String getSubject() {
