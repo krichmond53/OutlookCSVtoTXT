@@ -30,44 +30,45 @@ public class CSVtoTXT {
 	
 	public static ArrayList<Email> makeEmails(Scanner input){
 		ArrayList<Email> em = new ArrayList<Email>();
+		String subject = "";
+		String fromAddress = "";
+		String toAddress = "";
+		String ccAddress = "";
 		String body = "";
-
+		
+		Email newEmail = null;
 		while (input.hasNextLine()){
 			String thisLine = input.nextLine();
 			String[] lineSplit = thisLine.split(",");
-			String subject = "";
-			String fromAddress = "";
-			String toAddress = "";
-			String ccAddress = "";
-			
 			int len = lineSplit.length;
 			
 			// If there are 7 items in the array and the next array doesn't have 7, then add the next array
 			// strings to the previous body.
-			System.out.println("Array size: " + len);
+//			System.out.println("Array size: " + len);
 
 			if (len == 7) {
-				System.out.println("Body: " + body);
-
+//				System.out.println("Body: " + body);
+				newEmail = new Email("defaultTime", subject, body, fromAddress, toAddress, ccAddress);
+				System.out.println(newEmail.toString());
+				
 				subject = lineSplit[1];
 				fromAddress = lineSplit[2];
 				toAddress = lineSplit[3];
 				ccAddress = lineSplit[4];
 				body = lineSplit[6];
-				System.out.println("Subject: " + subject + "\nFrom: " + fromAddress + "\nTo " 
-						+ toAddress + "\nCC: " + ccAddress + "\n");
+//				System.out.println("Subject: " + subject + "\nFrom: " + fromAddress + "\nTo " 
+//						+ toAddress + "\nCC: " + ccAddress + "\n");
 			} else if (len < 7) {
 				for (String s : lineSplit) {
 					body += s + "\n";
 				}
 			}
 
-			
-//			Email newEmail = Email(dateTime, subject, body, fromAddress, toAddress, ccAddress);
-//			newEmail = new Email("defaultTime", lineSplit[1], body, lineSplit[2], lineSplit[3], lineSplit[4]);
-//			newEmail.toString();
-			
 		}
+//		Email newEmail = Email(dateTime, subject, body, fromAddress, toAddress, ccAddress);
+		newEmail = new Email("defaultTime", subject, body, fromAddress, toAddress, ccAddress);
+		System.out.println(newEmail.toString());
+		
 		return em;
 	}
 	
