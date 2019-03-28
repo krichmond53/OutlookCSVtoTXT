@@ -36,7 +36,8 @@ public class CSVtoTXT {
 	}
 	
 	/**
-	 * Creates ArrayList of Email objects
+	 * Creates ArrayList of Email objects. Outlook's CSV output has 19 columns.  This
+	 * function will only grab the subject, to/from/cc addresses, and the body of the email.
 	 * @param input - Scanner object of a good file
 	 * @return - List of Email objects
 	 */
@@ -54,29 +55,25 @@ public class CSVtoTXT {
 			String[] lineSplit = thisLine.split(",");
 			int len = lineSplit.length;
 			
-			// If there are 7 items in the array and the next array doesn't have 7, then add the next array
-			// strings to the previous body.
-
-			if (len == 7) {
-				newEmail = new Email("defaultTime", subject, body, fromAddress, toAddress, ccAddress);
-				em.add(newEmail);
-				
-				subject = lineSplit[1];
-				fromAddress = lineSplit[2];
-				toAddress = lineSplit[3];
-				ccAddress = lineSplit[4];
-				body = lineSplit[6];
-			} else if (len < 7) {
-				for (String s : lineSplit) {
-					if (s.trim().length() > 0) {
-						body += s + "\n";
-					}
-				}
+//			int count = len;
+//			for (String l : lineSplit) {
+//				System.out.println((len-count) + ": " + l);
+//				count--;
+//			}
+			
+			subject = lineSplit[0];
+			fromAddress = lineSplit[(len-16)];
+			toAddress = lineSplit[(len-13)];
+			ccAddress = lineSplit[(len-10)];
+			
+			for(int i = 1; i<len-18; i++) {
+				body += lineSplit[i];
 			}
+
+			newEmail = new Email("defaultTime", subject, body, fromAddress, toAddress, ccAddress);
+			em.add(newEmail);
+			body = "";
 		}
-		newEmail = new Email("defaultTime", subject, body, fromAddress, toAddress, ccAddress);
-		em.add(newEmail);
-		
 		return em;
 	}
 	
