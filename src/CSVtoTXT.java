@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*
  * Exporting emails from Outlook can be done either into a .pst or .csv.  .pst files
@@ -55,12 +57,6 @@ public class CSVtoTXT {
 			String[] lineSplit = thisLine.split(",");
 			int len = lineSplit.length;
 			
-//			int count = len;
-//			for (String l : lineSplit) {
-//				System.out.println((len-count) + ": " + l);
-//				count--;
-//			}
-			
 			subject = lineSplit[0];
 			fromAddress = lineSplit[(len-16)];
 			toAddress = lineSplit[(len-13)];
@@ -70,13 +66,36 @@ public class CSVtoTXT {
 				body += lineSplit[i];
 			}
 
-			newEmail = new Email("defaultTime", subject, body, fromAddress, toAddress, ccAddress);
+			String dateTime = getDateTimeFromBody(body);
+			
+			newEmail = new Email(dateTime, subject, body, fromAddress, toAddress, ccAddress);
 			em.add(newEmail);
 			body = "";
 		}
 		return em;
 	}
 	
+	
+	/**
+	 * Look through the body to see if there is a date where a relative date/time can be assumed from an
+	 * email reply.
+	 * @param body - The body of an email
+	 * @return - A relative date/time extracted from the email body
+	 */
+	private static String getDateTimeFromBody(String body) {
+		String dt = "n/a";
+		
+		Pattern pattern = Pattern.compile("On (.*?)at");
+		Matcher matcher = pattern.matcher(body);
+		if (matcher.find())
+		{
+//		    System.out.println(matcher.group(1));
+		    dt = matcher.group(1);
+		}
+		
+		return dt;
+	}
+
 	/**
 	 * Basic command line input 
 	 * @param args - First argument should be the name of a file in the current working directory
